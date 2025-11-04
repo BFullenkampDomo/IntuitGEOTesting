@@ -25,6 +25,11 @@
     <meta name="twitter:description"
         content="Proof-of-concept test page for validating dynamic rendering of Domo embedded dashboards">
 
+    <!-- Prerender.io ready flag -->
+    <script>
+        window.prerenderReady = false;
+    </script>
+    
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
@@ -325,6 +330,9 @@
     </footer>
 
     <script>
+        // Prerender.io ready flag - signals when page is ready for rendering
+        window.prerenderReady = false;
+        
         // Populate dynamic content
         document.getElementById('test-date').textContent = new Date().toLocaleDateString();
         document.getElementById('user-agent').textContent = navigator.userAgent;
@@ -342,6 +350,60 @@
             console.log('Page is loaded in an iframe');
             document.getElementById('load-status').textContent = 'LOADED IN IFRAME';
             document.getElementById('load-status').className = 'status-indicator status-warning';
+        }
+
+        // Wait for Domo iframe to load
+        const maxWaitTime = 10000; // Max wait time in milliseconds
+        const domoIframe = document.querySelector('iframe[src*="embed.domo.com"]');
+        if (domoIframe) {
+            console.log('Waiting for Domo iframe to load...');
+            
+            // Set a timeout to wait for iframe content (max 10 seconds)
+            const startTime = Date.now();
+            
+            // Function to check if iframe has loaded
+            function checkIframeReady() {
+                try {
+                    // Try to access iframe content (will fail due to same-origin, but we can check iframe loaded)
+                    const iframeLoaded = domoIframe.contentWindow !== null;
+                    
+                    if (iframeLoaded || (Date.now() - startTime) > maxWaitTime) {
+                        console.log('Domo iframe ready or timeout reached');
+                        window.prerenderReady = true;
+                        console.log('window.prerenderReady set to true');
+                    } else {
+                        // Check again after delay
+                        setTimeout(checkIframeReady, 500);
+                    }
+                } catch (e) {
+                    // Cross-origin error is expected - iframe is loaded but we can't access content
+                    console.log('Iframe loaded (cross-origin access blocked, which is expected)');
+                    window.prerenderReady = true;
+                    console.log('window.prerenderReady set to true');
+                }
+            }
+            
+            // Wait for iframe to load
+            domoIframe.addEventListener('load', function() {
+                console.log('Domo iframe load event fired');
+                // Give it extra time for content to render inside iframe
+                setTimeout(function() {
+                    window.prerenderReady = true;
+                    console.log('window.prerenderReady set to true after iframe load');
+                }, 3000); // Wait 3 seconds after iframe loads for content to render
+            });
+            
+            // Fallback: set ready flag after max wait time
+            setTimeout(function() {
+                if (!window.prerenderReady) {
+                    console.log('Timeout reached, setting prerenderReady');
+                    window.prerenderReady = true;
+                }
+            }, maxWaitTime);
+        } else {
+            // No iframe found, set ready immediately
+            window.prerenderReady = true;
+            console.log('No Domo iframe found, prerenderReady set immediately');
         }
     </script>
 </body>
