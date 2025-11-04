@@ -1,0 +1,24 @@
+{
+  "name": "intuit-geo-testing",
+  "version": "1.0.0",
+  "description": "Dynamic Rendering Proof-of-Concept Test for Domo Dashboard Embedding",
+  "main": "test-rendering.js",
+  "scripts": {
+    "test": "node test-rendering.js",
+    "serve": "python3 -m http.server 8000 || npx http-server -p 8000"
+  },
+  "keywords": [
+    "domo",
+    "dashboard",
+    "embedding",
+    "SEO",
+    "dynamic-rendering",
+    "crawlability"
+  ],
+  "author": "Intuit GEO Testing",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
+

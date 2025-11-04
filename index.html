@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>Domo Dashboard Embed Test - Dynamic Rendering POC</title>
+    <meta name="description"
+        content="Proof-of-concept test page for validating dynamic rendering of Domo embedded dashboards for SEO and AI crawlability.">
+    <meta name="keywords" content="domo, dashboard, embedding, SEO, dynamic rendering, crawlability">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Intuit GEO Testing">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Domo Dashboard Embed Test - Dynamic Rendering POC">
+    <meta property="og:description"
+        content="Proof-of-concept test page for validating dynamic rendering of Domo embedded dashboards">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Domo Dashboard Embed Test - Dynamic Rendering POC">
+    <meta name="twitter:description"
+        content="Proof-of-concept test page for validating dynamic rendering of Domo embedded dashboards">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Domo Dashboard Embed Test",
+        "description": "Proof-of-concept test page for validating dynamic rendering of Domo embedded dashboards",
+        "url": "https://your-domain.com",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01"
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .test-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .test-section h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .reference-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+        }
+
+        .domo-embed-container {
+            position: relative;
+            width: 100%;
+            min-height: 600px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            margin: 20px 0;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .domo-embed-container iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .embed-placeholder {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .embed-placeholder h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .test-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .test-info code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+        }
+
+        .metadata-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Domo Dashboard Embed Test</h1>
+        <p>Dynamic Rendering Proof-of-Concept for SEO & AI Crawlability</p>
+    </header>
+
+    <div class="container">
+        <!-- Reference Content Section -->
+        <section class="test-section" id="reference-content">
+            <h2>✅ Reference Content (Verification)</h2>
+            <p>This section contains visible, crawlable content to verify that the page loaded correctly and can be
+                indexed by search engines and AI crawlers.</p>
+
+            <div class="reference-content">
+                <h3>Test Page Information</h3>
+                <p><strong>Purpose:</strong> Validate dynamic rendering of Domo embedded dashboards</p>
+                <p><strong>Test Date:</strong> <span id="test-date"></span></p>
+                <p><strong>User Agent:</strong> <span id="user-agent"></span></p>
+                <p><strong>Page Load Status:</strong> <span class="status-indicator status-success"
+                        id="load-status">LOADED</span></p>
+            </div>
+
+            <div class="test-info">
+                <h3>What to Look For:</h3>
+                <ul>
+                    <li>This reference content should always be visible in rendered HTML</li>
+                    <li>If this content appears, the page structure is being crawled correctly</li>
+                    <li>Compare this with the Domo embed section below to determine if iframe content is accessible</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Domo Embed Section -->
+        <section class="test-section" id="domo-embed">
+            <h2>📊 Domo Dashboard Embed</h2>
+            <p>This section contains the embedded Domo dashboard. The test is to determine if dynamic rendering services
+                can extract content from this iframe.</p>
+
+            <div class="test-info">
+                <h3>Testing Instructions:</h3>
+                <ol>
+                    <li>Replace the placeholder below with your actual Domo embed code</li>
+                    <li>Deploy this page to a public URL</li>
+                    <li>Use a dynamic rendering service (Prerender.io, Rendertron, etc.) to fetch the page</li>
+                    <li>Inspect the rendered HTML to see if Domo iframe content is present</li>
+                </ol>
+            </div>
+
+            <div class="domo-embed-container">
+                
+                <iframe src="https://embed.domo.com/embed/pages/JqXZJ" width="1248" height="1620" marginheight="0"
+                    marginwidth="0" frameborder="0"></iframe>
+            </div>
+
+            <div class="test-info">
+                <h3>Expected Outcomes:</h3>
+                <ul>
+                    <li><strong>✅ Success:</strong> Dashboard content visible in rendered HTML as semantic markup</li>
+                    <li><strong>⚠️ Partial:</strong> Some content visible but blocked by technical constraints</li>
+                    <li><strong>❌ Failure:</strong> Iframe content inaccessible, requires alternative approach</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Metadata Section -->
+        <section class="test-section" id="metadata">
+            <h2>🔍 SEO Metadata</h2>
+            <p>This section displays the SEO metadata that should be crawlable by search engines and AI crawlers.</p>
+
+            <div class="metadata-display">
+                <strong>Page Title:</strong> <span id="page-title"></span><br>
+                <strong>Meta Description:</strong> <span id="meta-description"></span><br>
+                <strong>Canonical URL:</strong> <span id="canonical-url"></span><br>
+                <strong>Structured Data:</strong> JSON-LD present in page source
+            </div>
+
+            <div class="test-info">
+                <h3>Metadata Verification:</h3>
+                <ul>
+                    <li>Check that all meta tags are present in the rendered HTML</li>
+                    <li>Verify structured data (JSON-LD) is parseable</li>
+                    <li>Confirm Open Graph and Twitter Card tags are rendered</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Test Results Section -->
+        <section class="test-section" id="test-results">
+            <h2>📋 Test Results Template</h2>
+            <p>Use this section to document your findings after running the dynamic rendering test.</p>
+
+            <div class="test-info">
+                <h3>Test Configuration:</h3>
+                <ul>
+                    <li><strong>Rendering Service:</strong> [Prerender.io / Rendertron / Custom / Other]</li>
+                    <li><strong>User Agent:</strong> [Googlebot / ChatGPT / Claude / Other]</li>
+                    <li><strong>Test Date:</strong> [Date]</li>
+                    <li><strong>Test URL:</strong> [Public URL of deployed page]</li>
+                </ul>
+            </div>
+
+            <div class="test-info">
+                <h3>Findings:</h3>
+                <ul>
+                    <li><strong>Reference Content:</strong> [Visible / Not Visible]</li>
+                    <li><strong>Domo Iframe Content:</strong> [Visible / Partially Visible / Not Visible]</li>
+                    <li><strong>Dashboard Elements:</strong> [List what was found: titles, metrics, charts, data]</li>
+                    <li><strong>Technical Issues:</strong> [Any blockers: IP restrictions, auth, headers, timing]</li>
+                </ul>
+            </div>
+
+            <div class="test-info">
+                <h3>Recommendation:</h3>
+                <p>[Document the recommended path forward based on test results]</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Intuit GEO Testing - Dynamic Rendering Proof-of-Concept</p>
+        <p>This page is designed to test whether dynamic rendering services can crawl and index Domo embedded dashboard
+            content.</p>
+    </footer>
+
+    <script>
+        // Populate dynamic content
+        document.getElementById('test-date').textContent = new Date().toLocaleDateString();
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+        document.getElementById('page-title').textContent = document.title;
+        document.getElementById('meta-description').textContent = document.querySelector('meta[name="description"]').content;
+        document.getElementById('canonical-url').textContent = window.location.href;
+
+        // Log page load for debugging
+        console.log('Test page loaded successfully');
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Page URL:', window.location.href);
+
+        // Check if page is being loaded in an iframe (common for rendering services)
+        if (window.self !== window.top) {
+            console.log('Page is loaded in an iframe');
+            document.getElementById('load-status').textContent = 'LOADED IN IFRAME';
+            document.getElementById('load-status').className = 'status-indicator status-warning';
+        }
+    </script>
+</body>
+
+</html>
