@@ -22,9 +22,17 @@ echo -e "${GREEN}Testing Dynamic Rendering for: ${URL}${NC}\n"
 
 # Test 1: Prerender.io
 echo -e "${YELLOW}Test 1: Prerender.io${NC}"
-echo "Testing with: https://service.prerender.io/${URL}"
-echo "---"
-curl -s "https://service.prerender.io/${URL}" | head -50
+PRERENDER_TOKEN="${PRERENDER_TOKEN:-OSFXAsR7yFJ3gQ2T8vUP}"
+if [ -n "$PRERENDER_TOKEN" ]; then
+    echo "Testing with token: ${PRERENDER_TOKEN}"
+    echo "Testing URL: https://service.prerender.io/render?token=${PRERENDER_TOKEN}&url=${URL}"
+    echo "---"
+    curl -s "https://service.prerender.io/render?token=${PRERENDER_TOKEN}&url=${URL}" | head -100
+else
+    echo "Testing with: https://service.prerender.io/${URL}"
+    echo "---"
+    curl -s "https://service.prerender.io/${URL}" | head -50
+fi
 echo -e "\n---\n"
 
 # Test 2: Rendertron

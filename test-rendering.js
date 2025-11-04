@@ -103,7 +103,10 @@ async function main() {
   const results = [];
   
   // Test 1: Prerender.io
-  const prerenderUrl = `https://service.prerender.io/${url}`;
+  const prerenderToken = process.env.PRERENDER_TOKEN || 'OSFXAsR7yFJ3gQ2T8vUP';
+  const prerenderUrl = prerenderToken 
+    ? `https://service.prerender.io/render?token=${prerenderToken}&url=${encodeURIComponent(url)}`
+    : `https://service.prerender.io/${url}`;
   results.push(await testRenderingService('Prerender.io', prerenderUrl, 'Test 1: Prerender.io'));
   
   // Test 2: Rendertron
