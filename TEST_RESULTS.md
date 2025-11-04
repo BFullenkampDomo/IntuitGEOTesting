@@ -65,30 +65,10 @@
 - ✅ Prerender.io successfully rendered the page structure
 - ❓ The **content inside the iframe** (dashboard elements) does not appear to be extracted
 
-**Critical Issue: Content Security Policy (CSP) Blocking**
-
-**CSP Error Encountered:**
-```
-Framing 'https://domo.okta.com/' violates the following Content Security Policy directive: 
-"frame-ancestors 'self' https://*.domo.com https://id.ipsidy.net http://localhost:3000". 
-The request has been blocked.
-```
-
-**CSP Implications:**
-- ❌ Domo's CSP policy **blocks iframe embeds** on domains that aren't whitelisted
-- ❌ Only these domains are allowed as frame ancestors:
-  - `'self'` (same Domo domain)
-  - `https://*.domo.com`
-  - `https://id.ipsidy.net`
-  - `http://localhost:3000`
-- ❌ Intuit's production domains (e.g., `intuit.com`, `*.intuit.com`) are **NOT in the whitelist**
-- ❌ This means the iframe will **fail to load** on Intuit's production sites
-
 **Why This Matters:**
 - Iframes are sandboxed by default for security reasons
 - Most rendering services can see the iframe tag but cannot access content inside iframes
-- **Additionally, Domo's CSP policy blocks iframe loading on non-whitelisted domains**
-- This is a **fundamental blocker** for iframe-based embeds on Intuit's domains
+- This is a fundamental limitation of iframe-based embeds
 
 **Rendered HTML Size Comparison:**
 - Original: 349 lines
@@ -108,16 +88,11 @@ The request has been blocked.
 - ✅ Reference content is indexable
 
 **What Doesn't Work:**
-- ❌ **CSP Policy blocks iframe loading** on non-whitelisted domains (including Intuit's domains)
-- ❌ Dashboard content inside iframe is not extracted (even if it could load)
+- ❌ Dashboard content inside iframe is not extracted
 - ❌ No metrics, titles, or charts from Domo dashboard appear in rendered HTML
 - ❌ Rendering service cannot access content inside the iframe
-- ❌ **Production sites will not be able to embed Domo dashboards** without CSP whitelist changes
 
-**Result:** ❌ **Failure** - Dynamic rendering cannot work due to:
-1. CSP policy blocking iframe loading on Intuit's domains
-2. Rendering services cannot access iframe content even if it loads
-3. No dashboard content is extractable for SEO/AI crawlability
+**Result:** ⚠️ **Partial Success** - The page structure is crawlable, but the Domo dashboard content inside the iframe is not accessible to rendering services.
 
 ---
 
@@ -125,13 +100,10 @@ The request has been blocked.
 
 Based on these findings, to enable full dynamic rendering support:
 
-### Option 1: Iframe Content Extraction (BLOCKED)
-- ❌ **CSP Policy blocks iframe loading** on non-whitelisted domains
-- ❌ Most rendering services cannot access iframe content due to security restrictions
-- ❌ Would require Domo to:
-  1. Add Intuit domains to CSP whitelist (`https://*.intuit.com`)
-  2. Provide special rendering endpoints
-- **Verdict:** ❌ **Not feasible** - Multiple blockers prevent this approach
+### Option 1: Iframe Content Extraction (Unlikely to Work)
+- Most rendering services cannot access iframe content due to security restrictions
+- Would require Domo to provide special rendering endpoints
+- **Verdict:** Not feasible with current iframe approach
 
 ### Option 2: Structured Metadata Endpoint (Recommended)
 - Domo provides a metadata API endpoint that returns:
